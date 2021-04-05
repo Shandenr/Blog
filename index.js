@@ -11,6 +11,7 @@ const https = require("https");
 const homeStartingContent = "Introductory content for my blog. This is the starting page for my daily journal.";
 const aboutContent = "This page describes what the blog is all about and some information about myself.";
 const contactContent = "Brief information about how to contact me via social media.";
+ 
 
 const app = express();
 
@@ -78,8 +79,7 @@ app.get("/weather", function(req,res){
 });
 
 app.post("/weather", function(req,res){
-  weathers = []; 
-        const city = req.bod.city; 
+        const city = req.body.city; 
         const units = "imperial";
         const apiKey = "c034340cdc5c48d783e206ed556e6058"
         const url = "https://api.openweathermap.org/data/2.5/weather?APPID=" + apiKey + "&q=" +city+ "&units=" + units; 
@@ -93,10 +93,11 @@ app.post("/weather", function(req,res){
             const temp = weatherData.main.temp; 
             const city = weatherData.name; 
             const windDirection = weatherData.wind.deg; 
+            const icon = weatherData.weather[0].icon;
             const weatherDescription = weatherData.weather[0].icon; 
             const imageURL = 
-            "http://openweathermap.org/img/wn/" + icon + "@2x.png"; 
-
+            "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+            const humidity = weatherData.main.humidity;
 
             const weather = {
               city: city, 
@@ -113,7 +114,7 @@ app.post("/weather", function(req,res){
           });
 
         });
-
+});
 
 
 
